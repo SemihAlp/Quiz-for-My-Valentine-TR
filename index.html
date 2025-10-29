@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz for My Valentine</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Pacifico', cursive;
+      background: linear-gradient(to bottom, #ffe6f0, #e0ccff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      border-radius: 2rem;
+      padding: 2rem;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 1rem;
+      border: 1px solid #ccc;
+      text-align: center;
+      font-family: inherit;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 1rem;
+      background: #ff4da6;
+      color: white;
+      cursor: pointer;
+      font-family: inherit;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #ff66b3;
+    }
+
+    h1 {
+      color: #ff4da6;
+      margin-bottom: 0.5rem;
+      font-size: 1.8rem;
+    }
+
+    h2 {
+      color: #ff4da6;
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+    }
+
+    h3 {
+      color: #ff4da6;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .spinner-container {
+      margin: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .spinner-wrapper {
+      position: relative;
+      width: 300px;
+      height: 70px;
+      overflow: hidden;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 255, 0.9));
+      border: 2px solid rgba(255, 77, 166, 0.15);
+      box-shadow: 0 8px 32px rgba(255, 77, 166, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+
+    .spinner-center-box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      width: 55px;
+      height: 45px;
+      background: linear-gradient(135deg, #ff4da6, #ff66b3, #ff80cc);
+      border-radius: 10px;
+      z-index: 20;
+      pointer-events: none;
+      box-shadow: 0 6px 20px rgba(255, 77, 166, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.3rem;
+      font-weight: 700;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .spinner-center-box.highlight {
+      transform: translate(-50%, -50%) scale(1.15);
+      box-shadow:
+        0 8px 30px rgba(255, 77, 166, 0.6),
+        0 0 25px rgba(255, 77, 166, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      background: linear-gradient(135deg, #ff3399, #ff4da6, #ff66b3, #ff80cc);
+      animation: modernPulse 0.6s ease-out;
+    }
+
+    @keyframes modernPulse {
+      0% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      50% {
+        transform: translate(-50%, -50%) scale(1.2);
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(1.15);
+      }
+    }
+
+    .spinner-track {
+      display: flex;
+      height: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 0 122px;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .spinner-track:active {
+      cursor: grabbing;
+    }
+
+    .spinner-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .spinner-item {
+      flex: 0 0 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #777;
+      transition: all 0.4s ease;
+      margin: 12px 6px;
+      user-select: none;
+      opacity: 0.8;
+      border-radius: 8px;
+    }
+
+    .spinner-item.active {
+      opacity: 0;
+    }
+
+    .spinner-label {
+      margin-top: 1.2rem;
+      color: #555;
+      font-size: 1rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #ff4da6, #9933ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .compatibility-analysis {
+      background: linear-gradient(135deg, rgba(255, 77, 166, 0.1), rgba(153, 51, 255, 0.1));
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      text-align: center;
+      border: 2px solid rgba(255, 77, 166, 0.2);
+      box-shadow: 0 8px 25px rgba(255, 77, 166, 0.1);
+    }
+
+    .compatibility-percentage {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ff4da6, #9933ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .compatibility-details {
+      font-size: 1rem;
+      color: #666;
+      font-weight: 500;
+      margin-top: 0.5rem;
+    }
+
+    .share-container {
+      margin: 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .share-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 1rem;
+      color: white;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .share-btn.whatsapp {
+      background: #25d366;
+    }
+
+    .share-btn.whatsapp:hover {
+      background: #1eb855;
+    }
+
+    .share-btn.copy {
+      background: #6c757d;
+    }
+
+    .share-btn.copy:hover {
+      background: #5a6268;
+    }
+
+    .share-btn.copy.copied {
+      background: #28a745;
+    }
+
+    .quiz-welcome {
+      background: linear-gradient(135deg, rgba(255, 77, 166, 0.1), rgba(153, 51, 255, 0.1));
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border: 2px solid rgba(255, 77, 166, 0.2);
+    }
+
+    .quiz-info {
+      font-size: 1.1rem;
+      color: #666;
+      margin: 1rem 0;
+    }
+
+    .container {
+      position: relative;
+    }
+
+    .sound-toggle {
+      position: absolute !important;
+      top: 15px !important;
+      right: 15px !important;
+      padding: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff4da6, #ff66b3);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      width: 40px;
+      height: 40px;
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 77, 166, 0.3);
+      z-index: 1000 !important;
+    }
+
+    .sound-toggle:hover {
+      background: linear-gradient(135deg, #ff66b3, #9933ff);
+      transform: scale(1.1);
+    }
+
+    .fade {
+      background: linear-gradient(150deg,
+          rgba(255, 105, 180, 1),
+          rgba(238, 130, 238, 1),
+          rgba(186, 85, 211, 1),
+          rgba(255, 20, 147, 1),
+          rgba(255, 140, 0, 1));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+
+    .quiz-card {
+      transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+    }
+
+    .quiz-card.slide-out-down {
+      transform: translateY(100vh);
+      opacity: 0;
+    }
+
+    .quiz-card.slide-in-up {
+      transform: translateY(-100vh);
+      opacity: 0;
+      animation: slideCardUp 1s ease-out forwards;
+    }
+
+    @keyframes slideCardUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .progress-container {
+      background: rgba(255, 182, 193, 0.3);
+      border-radius: 1rem;
+      height: 8px;
+      margin: 1rem 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-bar {
+      background: linear-gradient(90deg, #ff4da6, #ff66b3, #ff80c0);
+      height: 100%;
+      width: 0%;
+      transition: width 1s ease;
+      border-radius: 1rem;
+      position: relative;
+    }
+
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        left: -100%;
+      }
+
+      100% {
+        left: 100%;
+      }
+    }
+
+    .progress-text {
+      font-size: 0.9rem;
+      color: #cc0066;
+      margin-top: 0.3rem;
+      font-weight: 600;
+    }
+
+    .question-text {
+      background: #ffe6f0;
+      padding: 1rem;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+      color: #cc0066;
+    }
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .option-btn {
+      flex: 1;
+      padding: 0.8rem;
+      border-radius: 1rem;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s, background 0.3s;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .option-btn:hover {
+      transform: scale(1.05) rotate(-1deg);
+    }
+
+    .score,
+    .hint {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      color: #cc0066;
+      font-weight: 600;
+    }
+
+    .result {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ff3399;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .hint-box {
+      background: #ffe6f0;
+      padding: 0.5rem;
+      border-radius: 1rem;
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      color: #cc0066;
+      font-weight: 600;
+    }
+
+    .correct {
+      background: #00c853 !important;
+      color: white;
+      animation: correctPulse 0.5s;
+    }
+
+    .wrong {
+      background: #d50000 !important;
+      color: white;
+      animation: wrongShake 0.5s;
+    }
+
+    @keyframes correctPulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.2);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes wrongShake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-5px);
+      }
+
+      75% {
+        transform: translateX(5px);
+      }
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 2rem;
+      animation: floatUp 1s forwards;
+      z-index: 1000;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(1.3);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="welcome-container" class="container hidden">
+    <button id="soundToggle" class="sound-toggle">🔊</button>
+
+    <h1>💖 Quiz for My Valentine 💖</h1>
+    <h2 class="fade">Hoş geldiniz!</h2>
+    <h3>Soru sayısı seçiniz:</h3>
+
+    <div class="spinner-container">
+      <div class="spinner-wrapper">
+        <div class="spinner-track" id="spinnerTrack"></div>
+        <div class="spinner-center-box" id="centerBox">5</div>
+      </div>
+      <div class="spinner-label">Seçilen soru sayısı: <span id="selectedValue">5</span></div>
+    </div>
+
+    <button id="startCreatingBtn">Sorular oluşturmaya başla</button>
+  </div>
+
+  <div id="quiz-welcome-container" class="container hidden">
+    <button id="soundToggleWelcome" class="sound-toggle">🔊</button>
+
+    <h1>💖 Quiz for My Valentine 💖</h1>
+    <div class="quiz-welcome">
+      <h2 id="partnerName" class="fade">Sevgilinizden</h2>
+      <div class="quiz-info">Size özel hazırlanmış <span id="welcomeQuestionCount">5</span> soruluk quiz!</div>
+    </div>
+    <button id="startQuizFromLinkBtn">Quizi başlat</button>
+  </div>
+
+  <div id="form-container" class="container hidden">
+    <button id="soundToggleForm" class="sound-toggle">🔊</button>
+
+    <h2 id="form-title">1. Soruyu Oluştur</h2>
+    <input type="text" id="formQuestion" placeholder="Soruyu giriniz (max 50 karakter)" maxlength="50">
+    <input type="text" id="formOptionA" placeholder="A şıkkını giriniz (max 25 karakter)" maxlength="25">
+    <input type="text" id="formOptionB" placeholder="B şıkkını giriniz (max 25 karakter)" maxlength="25">
+    <input type="text" id="formCorrect" placeholder="Doğru şıkkı giriniz (A veya B)">
+    <input type="text" id="formHint" placeholder="İpucu giriniz (max 20 karakter)" maxlength="20">
+    <button id="nextFormBtn">İlerle</button>
+  </div>
+
+  <div id="quiz-complete-container" class="container hidden">
+    <button id="soundToggleComplete" class="sound-toggle">🔊</button>
+
+    <h1>🎉 Quiz Hazır! 🎉</h1>
+    <h2 class="fade">Quiz başarıyla oluşturuldu!</h2>
+    <div class="quiz-info">Partnerinizle paylaşmak için aşağıdaki bağlantıyı kullanın:</div>
+
+    <div class="share-container">
+      <button class="share-btn whatsapp" id="shareWhatsAppBtn">
+        📱 WhatsApp'ta paylaş
+      </button>
+      <button class="share-btn copy" id="copyLinkBtn">
+        📋 Linki kopyala
+      </button>
+    </div>
+  </div>
+
+  <div id="quiz-container" class="container quiz-card hidden">
+    <button id="soundToggleQuiz" class="sound-toggle">🔊</button>
+
+    <h2>💖 Quiz for My Valentine 💖</h2>
+    <div class="progress-container">
+      <div id="progressBar" class="progress-bar"></div>
+    </div>
+    <div id="progressText" class="progress-text">Soru 1 / 5</div>
+    <div id="quizQuestion" class="question-text"></div>
+    <div class="options">
+      <button id="quizOptionA" class="option-btn"></button>
+      <button id="quizOptionB" class="option-btn"></button>
+    </div>
+    <div class="score">Skor: <span id="score">0</span></div>
+    <button id="hintBtn" class="btn">💡</button>
+    <div id="hintBox" class="hint-box" style="display:none;"></div>
+
+    <div id="result" class="hidden">
+      <div class="result">Tebrikler!</div>
+      <div><span id="totalQuestions">5</span> soruda toplam skor: <span id="finalScore"></span></div>
+
+      <div class="compatibility-analysis">
+        <div class="compatibility-percentage" id="compatibilityPercentage">Uyumluluk %80</div>
+        <div class="compatibility-details" id="compatibilityDetails">5/5 doğru cevap</div>
+      </div>
+
+      <div class="share-container">
+        <button class="share-btn whatsapp" id="shareResultWhatsAppBtn">
+          📱 Sonucu WhatsApp'ta paylaş
+        </button>
+        <button class="share-btn copy" id="copyResultBtn">
+          📋 Sonuç linkini kopyala
+        </button>
+      </div>
+
+      <button id="restart" class="btn">Tekrar (doyamadıysan😊)</button>
+    </div>
+  </div>
+
+  <div id="result-share-container" class="container hidden">
+    <button id="soundToggleResultShare" class="sound-toggle">🔊</button>
+
+    <h1>🎯 Quiz Sonucu</h1>
+    <div class="compatibility-analysis">
+      <div class="compatibility-percentage" id="sharedCompatibilityPercentage">Uyumluluk %80</div>
+      <div class="compatibility-details" id="sharedCompatibilityDetails">5/5 doğru cevap</div>
+      <div class="quiz-info" style="margin-top:1rem;">Bu quiz sonucu sizinle paylaşıldı!</div>
+    </div>
+
+    <button id="createOwnQuizBtn">Kendi quizimi oluştur</button>
+  </div>
+
+  <script>
+    let userQuestions = [];
+    let formStep = 1;
+    let totalQuestions = 5;
+    let soundEnabled = true;
+    let audioContext = null;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const quizData = urlParams.get('quiz');
+    const resultData = urlParams.get('result');
+
+    let currentQuestionCount = 5;
+    const minQuestions = 1;
+    const maxQuestions = 25;
+    const spinnerTrack = document.getElementById("spinnerTrack");
+    const selectedValueSpan = document.getElementById("selectedValue");
+    const centerBox = document.getElementById("centerBox");
+
+    let items = [];
+
+    function createSpinnerItems() {
+      const numbers = [];
+      for (let i = minQuestions; i <= maxQuestions; i++) {
+        numbers.push(i);
+      }
+
+      const allNumbers = [...numbers, ...numbers, ...numbers];
+
+      allNumbers.forEach((num, index) => {
+        const item = document.createElement('div');
+        item.className = 'spinner-item';
+        item.textContent = num;
+        item.dataset.value = num;
+        spinnerTrack.appendChild(item);
+        items.push(item);
+      });
+
+      const itemWidth = 68;
+      const numbersLength = numbers.length;
+      const targetIndex = numbersLength + 4;
+
+      setTimeout(() => {
+        const targetScrollLeft = (targetIndex * itemWidth) - 150 + 34;
+        spinnerTrack.scrollLeft = targetScrollLeft;
+        updateCenterValue();
+      }, 100);
+    }
+
+    function updateCenterValue() {
+      const itemWidth = 68;
+      const scrollLeft = spinnerTrack.scrollLeft;
+      const spinnerCenter = 150;
+
+      const centerPosition = scrollLeft + spinnerCenter;
+      const centerIndex = Math.round((centerPosition - 122) / itemWidth);
+      const validIndex = Math.max(0, Math.min(centerIndex, items.length - 1));
+
+      if (items[validIndex]) {
+        const centerValue = parseInt(items[validIndex].dataset.value);
+
+        if (centerValue !== currentQuestionCount) {
+          currentQuestionCount = centerValue;
+          selectedValueSpan.textContent = centerValue;
+          centerBox.textContent = centerValue;
+
+          centerBox.classList.remove('highlight');
+          setTimeout(() => {
+            centerBox.classList.add('highlight');
+            setTimeout(() => {
+              centerBox.classList.remove('highlight');
+            }, 600);
+          }, 50);
+        }
+      }
+
+      items.forEach(item => item.classList.remove('active'));
+
+      if (items[validIndex]) {
+        items[validIndex].classList.add('active');
+      }
+
+      const numbersLength = maxQuestions - minQuestions + 1;
+      const setWidth = numbersLength * itemWidth;
+
+      if (scrollLeft < setWidth * 0.8) {
+        spinnerTrack.scrollLeft += setWidth;
+      } else if (scrollLeft > setWidth * 2.2) {
+        spinnerTrack.scrollLeft -= setWidth;
+      }
+    }
+
+    let scrollTimeout;
+    spinnerTrack.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        updateCenterValue();
+      }, 50);
+    });
+
+    spinnerTrack.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const deltaX = e.deltaX || 0;
+      const deltaY = e.deltaY || 0;
+
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        spinnerTrack.scrollLeft += deltaX;
+      } else {
+        spinnerTrack.scrollLeft += deltaY;
+      }
+    }, { passive: false });
+
+    let startX = 0, scrollStart = 0, isDragging = false;
+    spinnerTrack.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      scrollStart = spinnerTrack.scrollLeft;
+      isDragging = true;
+    }, { passive: true });
+
+    spinnerTrack.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const currentX = e.touches[0].clientX;
+      const diffX = startX - currentX;
+      spinnerTrack.scrollLeft = scrollStart + diffX;
+    }, { passive: false });
+
+    spinnerTrack.addEventListener('touchend', () => {
+      isDragging = false;
+      setTimeout(() => updateCenterValue(), 100);
+    });
+
+    let mouseStartX = 0, mouseScrollStart = 0, isMouseDragging = false;
+    spinnerTrack.addEventListener('mousedown', (e) => {
+      mouseStartX = e.clientX;
+      mouseScrollStart = spinnerTrack.scrollLeft;
+      isMouseDragging = true;
+      spinnerTrack.style.cursor = 'grabbing';
+    });
+
+    spinnerTrack.addEventListener('mousemove', (e) => {
+      if (!isMouseDragging) return;
+      e.preventDefault();
+      const currentX = e.clientX;
+      const diffX = mouseStartX - currentX;
+      spinnerTrack.scrollLeft = mouseScrollStart + diffX;
+    });
+
+    spinnerTrack.addEventListener('mouseup', () => {
+      isMouseDragging = false;
+      spinnerTrack.style.cursor = 'grab';
+    });
+
+    spinnerTrack.addEventListener('mouseleave', () => {
+      isMouseDragging = false;
+      spinnerTrack.style.cursor = 'grab';
+    });
+
+    function initializeApp() {
+      hideAllScreens();
+
+      if (resultData) {
+        showResultShare();
+      } else if (quizData) {
+        showQuizWelcome();
+      } else {
+        showWelcome();
+      }
+    }
+
+    function hideAllScreens() {
+      document.getElementById('welcome-container').classList.add('hidden');
+      document.getElementById('quiz-welcome-container').classList.add('hidden');
+      document.getElementById('form-container').classList.add('hidden');
+      document.getElementById('quiz-complete-container').classList.add('hidden');
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('result-share-container').classList.add('hidden');
+    }
+
+    function showWelcome() {
+      hideAllScreens();
+      document.getElementById('welcome-container').classList.remove('hidden');
+      createSpinnerItems();
+    }
+
+    function showQuizWelcome() {
+      try {
+        const quiz = JSON.parse(atob(quizData));
+        hideAllScreens();
+        document.getElementById('quiz-welcome-container').classList.remove('hidden');
+        document.getElementById('welcomeQuestionCount').textContent = quiz.questions.length;
+        userQuestions = quiz.questions;
+        totalQuestions = quiz.questions.length;
+        document.getElementById('totalQuestions').textContent = totalQuestions;
+      } catch (e) {
+        alert('Geçersiz quiz linki!');
+        showWelcome();
+      }
+    }
+
+    function showResultShare() {
+      try {
+        const result = JSON.parse(atob(resultData));
+        hideAllScreens();
+        document.getElementById('result-share-container').classList.remove('hidden');
+        document.getElementById('sharedCompatibilityPercentage').textContent = `Uyumluluk %${result.percentage}`;
+        document.getElementById('sharedCompatibilityDetails').textContent = `${result.correct}/${result.total} doğru cevap`;
+      } catch (e) {
+        alert('Geçersiz sonuç linki!');
+        showWelcome();
+      }
+    }
+
+    document.getElementById("startCreatingBtn").addEventListener('click', () => {
+      totalQuestions = currentQuestionCount;
+      document.getElementById("totalQuestions").textContent = totalQuestions;
+      hideAllScreens();
+      document.getElementById("form-container").classList.remove('hidden');
+    });
+
+    document.getElementById("startQuizFromLinkBtn").addEventListener('click', () => {
+      hideAllScreens();
+      document.getElementById("quiz-container").classList.remove('hidden');
+      startQuiz();
+    });
+
+    document.getElementById("createOwnQuizBtn").addEventListener('click', () => {
+      window.location.href = window.location.origin + window.location.pathname;
+    });
+
+    function shareQuizLink() {
+      const quizObject = {
+        questions: userQuestions,
+        createdAt: new Date().toISOString()
+      };
+      const encodedQuiz = btoa(JSON.stringify(quizObject));
+      return `${window.location.origin}${window.location.pathname}?quiz=${encodedQuiz}`;
+    }
+
+    function shareResultLink(score, total) {
+      const resultObject = {
+        percentage: Math.round((score / total) * 100),
+        correct: score,
+        total: total,
+        sharedAt: new Date().toISOString()
+      };
+      const encodedResult = btoa(JSON.stringify(resultObject));
+      return `${window.location.origin}${window.location.pathname}?result=${encodedResult}`;
+    }
+
+    document.getElementById("shareWhatsAppBtn").addEventListener('click', () => {
+      const link = shareQuizLink();
+      const message = `Sana özel hazırladığım ${totalQuestions} soruluk quiz!${link}`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+    });
+
+    document.getElementById("copyLinkBtn").addEventListener('click', () => {
+      const link = shareQuizLink();
+      navigator.clipboard.writeText(link).then(() => {
+        const btn = document.getElementById("copyLinkBtn");
+        const originalText = btn.innerHTML;
+        btn.innerHTML = "✅ Kopyalandı!";
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    });
+
+    document.getElementById("shareResultWhatsAppBtn").addEventListener('click', () => {
+      const link = shareResultLink(quizScore, userQuestions.length);
+      const percentage = Math.round((quizScore / userQuestions.length) * 100);
+      const message = `Quiz sonucum: Uyumluluk %${percentage} (${quizScore}/${userQuestions.length} doğru!)${link}`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+    });
+
+    document.getElementById("copyResultBtn").addEventListener('click', () => {
+      const link = shareResultLink(quizScore, userQuestions.length);
+      navigator.clipboard.writeText(link).then(() => {
+        const btn = document.getElementById("copyResultBtn");
+        const originalText = btn.innerHTML;
+        btn.innerHTML = "✅ Kopyalandı!";
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    });
+
+    const soundButtons = ['soundToggle', 'soundToggleWelcome', 'soundToggleForm', 'soundToggleComplete', 'soundToggleQuiz', 'soundToggleResultShare'];
+
+    function updateAllSoundButtons() {
+      const icon = soundEnabled ? '🔊' : '🔇';
+      soundButtons.forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.textContent = icon;
+      });
+    }
+
+    soundButtons.forEach(id => {
+      const btn = document.getElementById(id);
+      if (btn) {
+        btn.addEventListener('click', () => {
+          soundEnabled = !soundEnabled;
+          updateAllSoundButtons();
+        });
+      }
+    });
+
+    function initAudioContext() {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      return audioContext;
+    }
+
+    function playSound(frequency, duration, type = 'sine') {
+      if (!soundEnabled) return;
+      const ctx = initAudioContext();
+      const oscillator = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+      oscillator.connect(gainNode);
+      gainNode.connect(ctx.destination);
+      oscillator.frequency.value = frequency;
+      oscillator.type = type;
+      gainNode.gain.setValueAtTime(0.1, ctx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+      oscillator.start(ctx.currentTime);
+      oscillator.stop(ctx.currentTime + duration);
+    }
+
+    function playCorrectSound() {
+      if (!soundEnabled) return;
+      playSound(523.25, 0.2);
+      setTimeout(() => playSound(659.25, 0.2), 100);
+      setTimeout(() => playSound(783.99, 0.3), 200);
+    }
+
+    function playWrongSound() {
+      if (!soundEnabled) return;
+      playSound(329.63, 0.4, 'triangle');
+    }
+
+    function createEmoji(x, y, emojiChar) {
+      const emoji = document.createElement('div');
+      emoji.className = 'emoji';
+      emoji.textContent = emojiChar;
+      emoji.style.left = x + 'px';
+      emoji.style.top = y + 'px';
+      document.body.appendChild(emoji);
+      setTimeout(() => emoji.remove(), 1000);
+    }
+
+    const nextFormBtn = document.getElementById("nextFormBtn");
+    const formTitle = document.getElementById("form-title");
+    const formContainer = document.getElementById("form-container");
+
+    nextFormBtn.addEventListener("click", () => {
+      const q = document.getElementById("formQuestion").value.trim();
+      const a = document.getElementById("formOptionA").value.trim();
+      const b = document.getElementById("formOptionB").value.trim();
+      const c = document.getElementById("formCorrect").value.trim().toUpperCase();
+      const h = document.getElementById("formHint").value.trim();
+      if (!q || !a || !b || (c !== "A" && c !== "B") || !h) {
+        alert("Tüm alanları doğru doldurun!");
+        return;
+      }
+      userQuestions.push({ question: q, options: [a, b], correct: c, hint: h });
+      if (formStep < totalQuestions) {
+        formStep++;
+        formTitle.textContent = `${formStep}. Soruyu Oluştur`;
+        document.querySelectorAll("#form-container input").forEach(input => input.value = "");
+        if (formStep === totalQuestions) nextFormBtn.textContent = "Quizi Tamamla";
+      } else {
+        hideAllScreens();
+        document.getElementById("quiz-complete-container").classList.remove("hidden");
+      }
+    });
+
+    let currentQuizIndex = 0, quizScore = 0;
+    const quizContainer = document.getElementById("quiz-container");
+    const quizCard = document.getElementById("quiz-container");
+    const quizQuestion = document.getElementById("quizQuestion");
+    const quizOptionA = document.getElementById("quizOptionA");
+    const quizOptionB = document.getElementById("quizOptionB");
+    const scoreEl = document.getElementById("score");
+    const hintBtn = document.getElementById("hintBtn");
+    const hintBox = document.getElementById("hintBox");
+    const progressBar = document.getElementById("progressBar");
+    const progressText = document.getElementById("progressText");
+    const resultDiv = document.getElementById("result");
+    const finalScore = document.getElementById("finalScore");
+    const restartBtn = document.getElementById("restart");
+
+    function updateProgress() {
+      const progress = (currentQuizIndex / userQuestions.length) * 100;
+      progressBar.style.width = progress + '%';
+      progressText.textContent = `Soru ${currentQuizIndex + 1} / ${userQuestions.length}`;
+    }
+
+    function updateProgressText() {
+      progressText.textContent = `Soru ${currentQuizIndex + 1} / ${userQuestions.length}`;
+    }
+
+    function toggleHint() {
+      hintBox.style.display = (hintBox.style.display === 'none') ? 'block' : 'none';
+    }
+
+    function loadQuestion() {
+      const q = userQuestions[currentQuizIndex];
+      quizQuestion.textContent = q.question;
+      quizOptionA.textContent = q.options[0];
+      quizOptionB.textContent = q.options[1];
+      hintBox.textContent = q.hint;
+      hintBox.style.display = 'none';
+      quizOptionA.classList.remove('correct', 'wrong');
+      quizOptionB.classList.remove('correct', 'wrong');
+      quizCard.classList.add('slide-in-up');
+      setTimeout(() => quizCard.classList.remove('slide-in-up'), 1000);
+
+      updateProgressText();
+      updateProgress();
+    }
+
+    function checkAnswer(btn) {
+      const q = userQuestions[currentQuizIndex];
+      const other = btn === quizOptionA ? quizOptionB : quizOptionA;
+      const rect = btn.getBoundingClientRect();
+
+      if ((btn === quizOptionA && q.correct === 'A') || (btn === quizOptionB && q.correct === 'B')) {
+        btn.classList.add('correct');
+        quizScore++;
+        createEmoji(rect.left + rect.width / 2, rect.top, '🥰');
+        playCorrectSound();
+      } else {
+        btn.classList.add('wrong');
+        other.classList.add('correct');
+        createEmoji(rect.left + rect.width / 2, rect.top, '🥺');
+        playWrongSound();
+      }
+
+      scoreEl.textContent = quizScore;
+      currentQuizIndex++;
+
+      setTimeout(() => {
+        if (currentQuizIndex >= userQuestions.length) {
+          progressBar.style.width = '100%';
+        } else {
+          const progress = (currentQuizIndex / userQuestions.length) * 100;
+          progressBar.style.width = progress + '%';
+        }
+
+        setTimeout(() => {
+          quizCard.classList.add('slide-out-down');
+          setTimeout(() => {
+            quizCard.classList.remove('slide-out-down');
+            if (currentQuizIndex < userQuestions.length) {
+              loadQuestion();
+            } else {
+              const compatibilityPercentage = Math.round((quizScore / userQuestions.length) * 100);
+              document.getElementById('compatibilityPercentage').textContent = `Uyumluluk %${compatibilityPercentage}`;
+              document.getElementById('compatibilityDetails').textContent = `${quizScore}/${userQuestions.length} doğru cevap`;
+
+              document.querySelector('#quiz-container > h2').style.display = 'none';
+              document.querySelector('#quiz-container .progress-container').style.display = 'none';
+              document.querySelector('#quiz-container .progress-text').style.display = 'none';
+              document.querySelector('#quiz-container .question-text').style.display = 'none';
+              document.querySelector('#quiz-container .options').style.display = 'none';
+              document.querySelector('#quiz-container .score').style.display = 'none';
+              document.querySelector('#quiz-container .btn').style.display = 'none';
+              document.querySelector('#quiz-container .hint-box').style.display = 'none';
+
+              resultDiv.classList.remove('hidden');
+              finalScore.textContent = quizScore;
+
+              quizCard.classList.add('slide-in-up');
+              setTimeout(() => quizCard.classList.remove('slide-in-up'), 1000);
+            }
+          }, 1000);
+        }, 600);
+      }, 400);
+    }
+
+    function startQuiz() {
+      currentQuizIndex = 0;
+      quizScore = 0;
+      scoreEl.textContent = quizScore;
+
+      document.getElementById('totalQuestions').textContent = userQuestions.length;
+      totalQuestions = userQuestions.length;
+
+      loadQuestion();
+      quizOptionA.addEventListener('click', () => checkAnswer(quizOptionA));
+      quizOptionB.addEventListener('click', () => checkAnswer(quizOptionB));
+      hintBtn.addEventListener('click', toggleHint);
+      restartBtn.addEventListener('click', () => location.reload());
+    }
+
+    initializeApp();
+  </script>
+
+</body>
+
+</html>
