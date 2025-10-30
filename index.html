@@ -804,7 +804,7 @@
 
     function showQuizWelcome() {
       try {
-        const quiz = JSON.parse(atob(quizData));
+        const quiz = JSON.parse(decodeURIComponent(atob(quizData)));
         hideAllScreens();
         document.getElementById('quiz-welcome-container').classList.remove('hidden');
         document.getElementById('welcomeQuestionCount').textContent = quiz.questions.length;
@@ -812,24 +812,22 @@
         totalQuestions = quiz.questions.length;
         document.getElementById('totalQuestions').textContent = totalQuestions;
       } catch (e) {
-        alert('Geçersiz quiz linki!');
+        alert('Geçersiz sonuç linki!');
         showWelcome();
       }
     }
-
     function showResultShare() {
       try {
-        const result = JSON.parse(atob(resultData));
+        const result = JSON.parse(decodeURIComponent(atob(resultData)));
         hideAllScreens();
         document.getElementById('result-share-container').classList.remove('hidden');
-        document.getElementById('sharedCompatibilityPercentage').textContent = `Uyumluluk %${result.percentage}`;
-        document.getElementById('sharedCompatibilityDetails').textContent = `${result.correct}/${result.total} doğru cevap`;
+        document.getElementById('sharedCompatibilityPercentage').textContent = `Uyumluluk ${result.percentage}%`;
+        document.getElementById('sharedCompatibilityDetails').textContent = `${result.correct}/${result.total} correct answers`;
       } catch (e) {
         alert('Geçersiz sonuç linki!');
         showWelcome();
       }
     }
-
     document.getElementById("startCreatingBtn").addEventListener('click', () => {
       totalQuestions = currentQuestionCount;
       document.getElementById("totalQuestions").textContent = totalQuestions;
@@ -852,10 +850,9 @@
         questions: userQuestions,
         createdAt: new Date().toISOString()
       };
-      const encodedQuiz = btoa(JSON.stringify(quizObject));
+      const encodedQuiz = btoa(encodeURIComponent(JSON.stringify(quizObject)));
       return `${window.location.origin}${window.location.pathname}?quiz=${encodedQuiz}`;
     }
-
     function shareResultLink(score, total) {
       const resultObject = {
         percentage: Math.round((score / total) * 100),
@@ -863,7 +860,7 @@
         total: total,
         sharedAt: new Date().toISOString()
       };
-      const encodedResult = btoa(JSON.stringify(resultObject));
+      const encodedResult = btoa(encodeURIComponent(JSON.stringify(resultObject)));
       return `${window.location.origin}${window.location.pathname}?result=${encodedResult}`;
     }
 
