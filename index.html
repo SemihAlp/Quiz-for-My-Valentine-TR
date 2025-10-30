@@ -822,7 +822,7 @@
         hideAllScreens();
         document.getElementById('result-share-container').classList.remove('hidden');
         document.getElementById('sharedCompatibilityPercentage').textContent = `Uyumluluk ${result.percentage}%`;
-        document.getElementById('sharedCompatibilityDetails').textContent = `${result.correct}/${result.total} correct answers`;
+        document.getElementById('sharedCompatibilityDetails').textContent = `${result.correct}/${result.total} doğru cevap`;
       } catch (e) {
         alert('Geçersiz sonuç linki!');
         showWelcome();
