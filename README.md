@@ -3,12 +3,6 @@
 
 🔗 **İlk testini oluştur!:** https://semihalp.github.io/Quiz-for-My-Valentine-TR/
 
-Bu URL'yi kullanarak:
--✅ Quizler oluşturabilirsiniz
--✅ Partnerinize paylaşabilirsiniz
--✅ Partneriniz herhangi bir cihazdan açabilir
--✅ Paylaşma linkleri çalışır
-
 ## Özellikler
 - Havalı bir spinner ile 1-25 arası soru oluşturma
 - WhatsApp/URL ile paylaşım
