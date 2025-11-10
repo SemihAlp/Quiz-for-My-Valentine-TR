@@ -15,3 +15,9 @@
 - HTML5 / CSS3
 - Web Audio API
 - GitHub Pages
+
+# • Logo •
+
+![• Logo • ](logo.png)
+
+Logo tasarımı "Bullet for My Valentine" adlı metal grubundan esinlenilmiştir.
