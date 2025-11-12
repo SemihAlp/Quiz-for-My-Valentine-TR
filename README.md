@@ -16,6 +16,13 @@
 - Web Audio API
 - GitHub Pages
 
+<table>
+  <tr>
+    <td><img src="1.png" width="600"></td>
+    <td><img src="2.png" width="600"></td>
+  </tr>
+</table>
+
 # • Logo •
 
 ![• Logo • ](logo.png)
