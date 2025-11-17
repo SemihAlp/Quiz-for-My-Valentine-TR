@@ -25,10 +25,15 @@
     <td><img src="3.png" width="600"></td>
     <td><img src="4.png" width="600"></td>
   </tr>
-    <tr>
+  <tr>
     <td><img src="5.png" width="600"></td>
     <td><img src="6.png" width="600"></td>
   </tr>
+  <tr>
+    <td><img src="7.png" width="600"></td>
+    <td><img src="8.png" width="600"></td>
+  </tr>
+  <tr>
 </table>
 
 # • Logo •
