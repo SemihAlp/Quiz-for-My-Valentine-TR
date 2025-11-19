@@ -41,3 +41,11 @@
 ![• Logo • ](logo.png)
 
 Logo tasarımı "Bullet for My Valentine" adlı metal grubundan esinlenilmiştir.
+
+## Neden GitHub Pages?
+Ücretsiz: GitHub Pages tamamen ücretsiz
+Hızlı: Direkt tarayıcıda çalışıyor, sunucu gecikmesi yok
+Güvenli: Hiçbir kişisel veri saklanmıyor
+Kolay: Tek HTML dosyası, deploy kolay
+SSL: Otomatik HTTPS sertifikası
+Güvenilir: GitHub'ın altyapısı
