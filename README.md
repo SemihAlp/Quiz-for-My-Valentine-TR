@@ -16,6 +16,21 @@
 - Web Audio API
 - GitHub Pages
 
+## Nasıl Oynanır?
+-  Açılış ekranında bulunan döndürücü ile 1-25 arası soru seçiniz.
+-  Seçtiğiniz soru sayısı kadar soru oluşturmaya başlayınız.
+-  Sorularınıza seçeneklerinizi giriniz ve doğru seçeneğinizi belirleyiniz.
+-  Partnerinize yardımcı olmak için sorularınıza ipucu giriniz. ☻
+-  Hazır olduğunuzda testi Whatsapp veya URL yoluyla partnerinizle paylaşabilirsiniz!
+-  Partneriniz her doğru cevap için +1 puan kazanır. Yanlış cevap da ise bir kayıp yaşamaz.
+-  Test bittiğinde partneriniz karşısına gelen "Uyumluluk Analizi" kartı ile skorunu ve sizinle olan uyumunu öğrenebilir, dilerse bu sonucu sizinle Whatsapp veya URL aracılığıyla paylaşabilir!
+-  Partneriniz "Tekrar Oyna" butonu ile yeniden testi çözmeye başlayabilir.
+-  Sizinle paylaşılan uyumluluk sonucu kartı ile skoru görebilir, dilerseniz de karttaki buton ile tekrardan bir test oluşturabilirsiniz.
+-  Oyun boyunca ekranın sağ üstünde bulunan ses açma/kapama butonu ile sesi kontrol edebilirsiniz.
+-  Tüm bunlara ek olarak oyun boyunca devam eden tatlı ve romantik animasyonlarla eğlenceniz katlanır!
+-  İYİ EĞLENCELER! ♥
+
+## Oyundan Kareler
 <table>
   <tr>
     <td><img src="1.png" width="600"></td>
@@ -37,7 +52,6 @@
 </table>
 
 # • Logo •
-
 ![• Logo • ](logo.png)
 
 Logo tasarımı "Bullet for My Valentine" adlı metal grubundan esinlenilmiştir.
