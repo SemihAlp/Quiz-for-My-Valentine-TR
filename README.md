@@ -60,6 +60,6 @@ Logo tasarımı "Bullet for My Valentine" adlı metal grubundan esinlenilmiştir
 - Ücretsiz: GitHub Pages tamamen ücretsiz
 - Hızlı: Direkt tarayıcıda çalışıyor, sunucu gecikmesi yok
 - Güvenli: Hiçbir kişisel veri saklanmıyor
-- Kolay: Tek HTML dosyası, deploy kolay
+- Kolay: Tek HTML dosyası olduğundan deploy kolay
 - SSL: Otomatik HTTPS sertifikası
 - Güvenilir: GitHub'ın altyapısı
